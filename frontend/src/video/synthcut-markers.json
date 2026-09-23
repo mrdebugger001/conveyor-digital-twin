@@ -1,0 +1,851 @@
+{
+  "fps": 60.0,
+  "bpm": 120.0,
+  "durationSec": 36.0,
+  "totalFrames": 2160,
+  "wavFile": "industrial-synth-master.wav",
+  "sceneCuts": [
+    {
+      "frame": 0,
+      "timeSec": 0.0,
+      "scene": "SCENE_01_INTRO_HERO",
+      "label": "CONVEYOR C01 // TWIN INIT"
+    },
+    {
+      "frame": 240,
+      "timeSec": 4.0,
+      "scene": "SCENE_02_NOMINAL_RUNNING",
+      "label": "NOMINAL STREAM // 3.20 M/S"
+    },
+    {
+      "frame": 600,
+      "timeSec": 10.0,
+      "scene": "SCENE_03_JOINT_DEGRADATION",
+      "label": "DEFECT ANOMALY // JOINT J023"
+    },
+    {
+      "frame": 960,
+      "timeSec": 16.0,
+      "scene": "SCENE_04_MOTOR_OVERHEAT",
+      "label": "THERMAL SURGE // DRIVE M01"
+    },
+    {
+      "frame": 1320,
+      "timeSec": 22.0,
+      "scene": "SCENE_05_MISALIGNMENT_CASCADE",
+      "label": "TRACKING DRIFT // ALARM CASCADE"
+    },
+    {
+      "frame": 1680,
+      "timeSec": 28.0,
+      "scene": "SCENE_06_OPERATOR_STOP_ACK",
+      "label": "E-STOP RESPONSE // INTERVENTION"
+    },
+    {
+      "frame": 1950,
+      "timeSec": 32.5,
+      "scene": "SCENE_07_ANALYTICS_OUTRO",
+      "label": "PREDICTIVE INTEGRITY // RESOLUTION"
+    }
+  ],
+  "transients": [
+    {
+      "frame": 15,
+      "timeSec": 0.25,
+      "strength": 7.32,
+      "type": "heavy_accent",
+      "bar": 0
+    },
+    {
+      "frame": 75,
+      "timeSec": 1.25,
+      "strength": 7.34,
+      "type": "heavy_accent",
+      "bar": 0
+    },
+    {
+      "frame": 120,
+      "timeSec": 2.0,
+      "strength": 7.14,
+      "type": "bar_downbeat",
+      "bar": 1
+    },
+    {
+      "frame": 135,
+      "timeSec": 2.25,
+      "strength": 7.24,
+      "type": "heavy_accent",
+      "bar": 1
+    },
+    {
+      "frame": 150,
+      "timeSec": 2.5,
+      "strength": 9.98,
+      "type": "heavy_accent",
+      "bar": 1
+    },
+    {
+      "frame": 165,
+      "timeSec": 2.75,
+      "strength": 6.35,
+      "type": "heavy_accent",
+      "bar": 1
+    },
+    {
+      "frame": 180,
+      "timeSec": 3.0,
+      "strength": 5.6,
+      "type": "heavy_accent",
+      "bar": 1
+    },
+    {
+      "frame": 195,
+      "timeSec": 3.25,
+      "strength": 6.03,
+      "type": "heavy_accent",
+      "bar": 1
+    },
+    {
+      "frame": 240,
+      "timeSec": 4.0,
+      "strength": 16.2,
+      "type": "bar_downbeat",
+      "bar": 2
+    },
+    {
+      "frame": 255,
+      "timeSec": 4.25,
+      "strength": 7.21,
+      "type": "heavy_accent",
+      "bar": 2
+    },
+    {
+      "frame": 270,
+      "timeSec": 4.5,
+      "strength": 27.02,
+      "type": "heavy_accent",
+      "bar": 2
+    },
+    {
+      "frame": 285,
+      "timeSec": 4.75,
+      "strength": 7.94,
+      "type": "heavy_accent",
+      "bar": 2
+    },
+    {
+      "frame": 300,
+      "timeSec": 5.0,
+      "strength": 28.77,
+      "type": "heavy_accent",
+      "bar": 2
+    },
+    {
+      "frame": 315,
+      "timeSec": 5.25,
+      "strength": 7.6,
+      "type": "heavy_accent",
+      "bar": 2
+    },
+    {
+      "frame": 330,
+      "timeSec": 5.5,
+      "strength": 26.43,
+      "type": "heavy_accent",
+      "bar": 2
+    },
+    {
+      "frame": 345,
+      "timeSec": 5.75,
+      "strength": 5.41,
+      "type": "heavy_accent",
+      "bar": 3
+    },
+    {
+      "frame": 360,
+      "timeSec": 6.0,
+      "strength": 29.59,
+      "type": "bar_downbeat",
+      "bar": 3
+    },
+    {
+      "frame": 375,
+      "timeSec": 6.25,
+      "strength": 7.13,
+      "type": "heavy_accent",
+      "bar": 3
+    },
+    {
+      "frame": 390,
+      "timeSec": 6.5,
+      "strength": 27.41,
+      "type": "heavy_accent",
+      "bar": 3
+    },
+    {
+      "frame": 405,
+      "timeSec": 6.75,
+      "strength": 7.19,
+      "type": "heavy_accent",
+      "bar": 3
+    },
+    {
+      "frame": 420,
+      "timeSec": 7.0,
+      "strength": 29.18,
+      "type": "heavy_accent",
+      "bar": 3
+    },
+    {
+      "frame": 435,
+      "timeSec": 7.25,
+      "strength": 7.16,
+      "type": "heavy_accent",
+      "bar": 3
+    },
+    {
+      "frame": 450,
+      "timeSec": 7.5,
+      "strength": 26.83,
+      "type": "heavy_accent",
+      "bar": 3
+    },
+    {
+      "frame": 465,
+      "timeSec": 7.75,
+      "strength": 4.92,
+      "type": "heavy_accent",
+      "bar": 4
+    },
+    {
+      "frame": 480,
+      "timeSec": 8.0,
+      "strength": 27.45,
+      "type": "bar_downbeat",
+      "bar": 4
+    },
+    {
+      "frame": 489,
+      "timeSec": 8.15,
+      "strength": 3.73,
+      "type": "heavy_accent",
+      "bar": 4
+    },
+    {
+      "frame": 495,
+      "timeSec": 8.25,
+      "strength": 8.25,
+      "type": "heavy_accent",
+      "bar": 4
+    },
+    {
+      "frame": 510,
+      "timeSec": 8.5,
+      "strength": 25.36,
+      "type": "heavy_accent",
+      "bar": 4
+    },
+    {
+      "frame": 519,
+      "timeSec": 8.65,
+      "strength": 4.16,
+      "type": "heavy_accent",
+      "bar": 4
+    },
+    {
+      "frame": 525,
+      "timeSec": 8.75,
+      "strength": 8.38,
+      "type": "heavy_accent",
+      "bar": 4
+    },
+    {
+      "frame": 540,
+      "timeSec": 9.0,
+      "strength": 27.24,
+      "type": "heavy_accent",
+      "bar": 4
+    },
+    {
+      "frame": 549,
+      "timeSec": 9.15,
+      "strength": 3.68,
+      "type": "heavy_accent",
+      "bar": 4
+    },
+    {
+      "frame": 555,
+      "timeSec": 9.25,
+      "strength": 8.05,
+      "type": "heavy_accent",
+      "bar": 4
+    },
+    {
+      "frame": 570,
+      "timeSec": 9.5,
+      "strength": 24.66,
+      "type": "heavy_accent",
+      "bar": 4
+    },
+    {
+      "frame": 579,
+      "timeSec": 9.65,
+      "strength": 4.12,
+      "type": "heavy_accent",
+      "bar": 4
+    },
+    {
+      "frame": 585,
+      "timeSec": 9.75,
+      "strength": 6.32,
+      "type": "heavy_accent",
+      "bar": 5
+    },
+    {
+      "frame": 600,
+      "timeSec": 10.0,
+      "strength": 29.04,
+      "type": "bar_downbeat",
+      "bar": 5
+    },
+    {
+      "frame": 615,
+      "timeSec": 10.25,
+      "strength": 7.46,
+      "type": "heavy_accent",
+      "bar": 5
+    },
+    {
+      "frame": 630,
+      "timeSec": 10.5,
+      "strength": 27.07,
+      "type": "heavy_accent",
+      "bar": 5
+    },
+    {
+      "frame": 645,
+      "timeSec": 10.75,
+      "strength": 8.09,
+      "type": "heavy_accent",
+      "bar": 5
+    },
+    {
+      "frame": 660,
+      "timeSec": 11.0,
+      "strength": 28.82,
+      "type": "heavy_accent",
+      "bar": 5
+    },
+    {
+      "frame": 675,
+      "timeSec": 11.25,
+      "strength": 7.25,
+      "type": "heavy_accent",
+      "bar": 5
+    },
+    {
+      "frame": 690,
+      "timeSec": 11.5,
+      "strength": 26.68,
+      "type": "heavy_accent",
+      "bar": 5
+    },
+    {
+      "frame": 705,
+      "timeSec": 11.75,
+      "strength": 5.57,
+      "type": "heavy_accent",
+      "bar": 6
+    },
+    {
+      "frame": 720,
+      "timeSec": 12.0,
+      "strength": 27.3,
+      "type": "bar_downbeat",
+      "bar": 6
+    },
+    {
+      "frame": 735,
+      "timeSec": 12.25,
+      "strength": 6.87,
+      "type": "heavy_accent",
+      "bar": 6
+    },
+    {
+      "frame": 750,
+      "timeSec": 12.5,
+      "strength": 26.35,
+      "type": "heavy_accent",
+      "bar": 6
+    },
+    {
+      "frame": 765,
+      "timeSec": 12.75,
+      "strength": 7.17,
+      "type": "heavy_accent",
+      "bar": 6
+    },
+    {
+      "frame": 780,
+      "timeSec": 13.0,
+      "strength": 28.37,
+      "type": "heavy_accent",
+      "bar": 6
+    },
+    {
+      "frame": 795,
+      "timeSec": 13.25,
+      "strength": 7.11,
+      "type": "heavy_accent",
+      "bar": 6
+    },
+    {
+      "frame": 810,
+      "timeSec": 13.5,
+      "strength": 26.15,
+      "type": "heavy_accent",
+      "bar": 6
+    },
+    {
+      "frame": 825,
+      "timeSec": 13.75,
+      "strength": 4.6,
+      "type": "heavy_accent",
+      "bar": 7
+    },
+    {
+      "frame": 840,
+      "timeSec": 14.0,
+      "strength": 27.06,
+      "type": "bar_downbeat",
+      "bar": 7
+    },
+    {
+      "frame": 855,
+      "timeSec": 14.25,
+      "strength": 7.26,
+      "type": "heavy_accent",
+      "bar": 7
+    },
+    {
+      "frame": 870,
+      "timeSec": 14.5,
+      "strength": 25.19,
+      "type": "heavy_accent",
+      "bar": 7
+    },
+    {
+      "frame": 885,
+      "timeSec": 14.75,
+      "strength": 7.85,
+      "type": "heavy_accent",
+      "bar": 7
+    },
+    {
+      "frame": 900,
+      "timeSec": 15.0,
+      "strength": 26.72,
+      "type": "heavy_accent",
+      "bar": 7
+    },
+    {
+      "frame": 915,
+      "timeSec": 15.25,
+      "strength": 7.19,
+      "type": "heavy_accent",
+      "bar": 7
+    },
+    {
+      "frame": 930,
+      "timeSec": 15.5,
+      "strength": 25.01,
+      "type": "heavy_accent",
+      "bar": 7
+    },
+    {
+      "frame": 945,
+      "timeSec": 15.75,
+      "strength": 5.46,
+      "type": "heavy_accent",
+      "bar": 8
+    },
+    {
+      "frame": 960,
+      "timeSec": 16.0,
+      "strength": 27.59,
+      "type": "bar_downbeat",
+      "bar": 8
+    },
+    {
+      "frame": 975,
+      "timeSec": 16.25,
+      "strength": 6.94,
+      "type": "heavy_accent",
+      "bar": 8
+    },
+    {
+      "frame": 990,
+      "timeSec": 16.5,
+      "strength": 23.72,
+      "type": "heavy_accent",
+      "bar": 8
+    },
+    {
+      "frame": 1005,
+      "timeSec": 16.75,
+      "strength": 7.72,
+      "type": "heavy_accent",
+      "bar": 8
+    },
+    {
+      "frame": 1020,
+      "timeSec": 17.0,
+      "strength": 26.87,
+      "type": "heavy_accent",
+      "bar": 8
+    },
+    {
+      "frame": 1035,
+      "timeSec": 17.25,
+      "strength": 6.93,
+      "type": "heavy_accent",
+      "bar": 8
+    },
+    {
+      "frame": 1050,
+      "timeSec": 17.5,
+      "strength": 24.84,
+      "type": "heavy_accent",
+      "bar": 8
+    },
+    {
+      "frame": 1065,
+      "timeSec": 17.75,
+      "strength": 5.2,
+      "type": "heavy_accent",
+      "bar": 9
+    },
+    {
+      "frame": 1080,
+      "timeSec": 18.0,
+      "strength": 28.7,
+      "type": "bar_downbeat",
+      "bar": 9
+    },
+    {
+      "frame": 1095,
+      "timeSec": 18.25,
+      "strength": 6.53,
+      "type": "heavy_accent",
+      "bar": 9
+    },
+    {
+      "frame": 1110,
+      "timeSec": 18.5,
+      "strength": 24.81,
+      "type": "heavy_accent",
+      "bar": 9
+    },
+    {
+      "frame": 1125,
+      "timeSec": 18.75,
+      "strength": 6.09,
+      "type": "heavy_accent",
+      "bar": 9
+    },
+    {
+      "frame": 1140,
+      "timeSec": 19.0,
+      "strength": 24.27,
+      "type": "heavy_accent",
+      "bar": 9
+    },
+    {
+      "frame": 1155,
+      "timeSec": 19.25,
+      "strength": 4.45,
+      "type": "heavy_accent",
+      "bar": 9
+    },
+    {
+      "frame": 1170,
+      "timeSec": 19.5,
+      "strength": 17.57,
+      "type": "heavy_accent",
+      "bar": 9
+    },
+    {
+      "frame": 1180,
+      "timeSec": 19.667,
+      "strength": 3.78,
+      "type": "heavy_accent",
+      "bar": 9
+    },
+    {
+      "frame": 1200,
+      "timeSec": 20.0,
+      "strength": 14.83,
+      "type": "bar_downbeat",
+      "bar": 10
+    },
+    {
+      "frame": 1215,
+      "timeSec": 20.25,
+      "strength": 7.2,
+      "type": "heavy_accent",
+      "bar": 10
+    },
+    {
+      "frame": 1230,
+      "timeSec": 20.5,
+      "strength": 24.61,
+      "type": "heavy_accent",
+      "bar": 10
+    },
+    {
+      "frame": 1245,
+      "timeSec": 20.75,
+      "strength": 8.32,
+      "type": "heavy_accent",
+      "bar": 10
+    },
+    {
+      "frame": 1260,
+      "timeSec": 21.0,
+      "strength": 27.25,
+      "type": "heavy_accent",
+      "bar": 10
+    },
+    {
+      "frame": 1275,
+      "timeSec": 21.25,
+      "strength": 7.98,
+      "type": "heavy_accent",
+      "bar": 10
+    },
+    {
+      "frame": 1290,
+      "timeSec": 21.5,
+      "strength": 25.83,
+      "type": "heavy_accent",
+      "bar": 10
+    },
+    {
+      "frame": 1305,
+      "timeSec": 21.75,
+      "strength": 6.45,
+      "type": "heavy_accent",
+      "bar": 11
+    },
+    {
+      "frame": 1320,
+      "timeSec": 22.0,
+      "strength": 27.79,
+      "type": "bar_downbeat",
+      "bar": 11
+    },
+    {
+      "frame": 1335,
+      "timeSec": 22.25,
+      "strength": 8.2,
+      "type": "heavy_accent",
+      "bar": 11
+    },
+    {
+      "frame": 1350,
+      "timeSec": 22.5,
+      "strength": 24.37,
+      "type": "heavy_accent",
+      "bar": 11
+    },
+    {
+      "frame": 1365,
+      "timeSec": 22.75,
+      "strength": 8.12,
+      "type": "heavy_accent",
+      "bar": 11
+    },
+    {
+      "frame": 1380,
+      "timeSec": 23.0,
+      "strength": 26.95,
+      "type": "heavy_accent",
+      "bar": 11
+    },
+    {
+      "frame": 1395,
+      "timeSec": 23.25,
+      "strength": 8.55,
+      "type": "heavy_accent",
+      "bar": 11
+    },
+    {
+      "frame": 1410,
+      "timeSec": 23.5,
+      "strength": 25.64,
+      "type": "heavy_accent",
+      "bar": 11
+    },
+    {
+      "frame": 1425,
+      "timeSec": 23.75,
+      "strength": 6.7,
+      "type": "heavy_accent",
+      "bar": 12
+    },
+    {
+      "frame": 1440,
+      "timeSec": 24.0,
+      "strength": 28.59,
+      "type": "bar_downbeat",
+      "bar": 12
+    },
+    {
+      "frame": 1455,
+      "timeSec": 24.25,
+      "strength": 7.67,
+      "type": "heavy_accent",
+      "bar": 12
+    },
+    {
+      "frame": 1470,
+      "timeSec": 24.5,
+      "strength": 24.82,
+      "type": "heavy_accent",
+      "bar": 12
+    },
+    {
+      "frame": 1485,
+      "timeSec": 24.75,
+      "strength": 7.95,
+      "type": "heavy_accent",
+      "bar": 12
+    },
+    {
+      "frame": 1500,
+      "timeSec": 25.0,
+      "strength": 27.72,
+      "type": "heavy_accent",
+      "bar": 12
+    },
+    {
+      "frame": 1515,
+      "timeSec": 25.25,
+      "strength": 7.83,
+      "type": "heavy_accent",
+      "bar": 12
+    },
+    {
+      "frame": 1530,
+      "timeSec": 25.5,
+      "strength": 25.75,
+      "type": "heavy_accent",
+      "bar": 12
+    },
+    {
+      "frame": 1545,
+      "timeSec": 25.75,
+      "strength": 6.17,
+      "type": "heavy_accent",
+      "bar": 13
+    },
+    {
+      "frame": 1560,
+      "timeSec": 26.0,
+      "strength": 27.67,
+      "type": "bar_downbeat",
+      "bar": 13
+    },
+    {
+      "frame": 1575,
+      "timeSec": 26.25,
+      "strength": 7.42,
+      "type": "heavy_accent",
+      "bar": 13
+    },
+    {
+      "frame": 1590,
+      "timeSec": 26.5,
+      "strength": 24.91,
+      "type": "heavy_accent",
+      "bar": 13
+    },
+    {
+      "frame": 1605,
+      "timeSec": 26.75,
+      "strength": 8.57,
+      "type": "heavy_accent",
+      "bar": 13
+    },
+    {
+      "frame": 1620,
+      "timeSec": 27.0,
+      "strength": 27.31,
+      "type": "heavy_accent",
+      "bar": 13
+    },
+    {
+      "frame": 1635,
+      "timeSec": 27.25,
+      "strength": 8.16,
+      "type": "heavy_accent",
+      "bar": 13
+    },
+    {
+      "frame": 1650,
+      "timeSec": 27.5,
+      "strength": 25.44,
+      "type": "heavy_accent",
+      "bar": 13
+    },
+    {
+      "frame": 1665,
+      "timeSec": 27.75,
+      "strength": 6.57,
+      "type": "heavy_accent",
+      "bar": 14
+    },
+    {
+      "frame": 1680,
+      "timeSec": 28.0,
+      "strength": 21.59,
+      "type": "bar_downbeat",
+      "bar": 14
+    },
+    {
+      "frame": 1740,
+      "timeSec": 29.0,
+      "strength": 17.77,
+      "type": "heavy_accent",
+      "bar": 14
+    },
+    {
+      "frame": 1800,
+      "timeSec": 30.0,
+      "strength": 22.96,
+      "type": "bar_downbeat",
+      "bar": 15
+    },
+    {
+      "frame": 1950,
+      "timeSec": 32.5,
+      "strength": 7.56,
+      "type": "heavy_accent",
+      "bar": 16
+    },
+    {
+      "frame": 2025,
+      "timeSec": 33.75,
+      "strength": 7.34,
+      "type": "heavy_accent",
+      "bar": 17
+    },
+    {
+      "frame": 2100,
+      "timeSec": 35.0,
+      "strength": 7.32,
+      "type": "heavy_accent",
+      "bar": 17
+    }
+  ]
+}

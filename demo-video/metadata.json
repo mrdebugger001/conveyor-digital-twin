@@ -1,0 +1,14 @@
+{
+  "title": "Iron Ore Conveyor Digital Twin — SIH 2026 Technical Product Presentation",
+  "duration_seconds": 108.75,
+  "resolution": "1920x1080",
+  "fps": 60,
+  "container": "MP4",
+  "video_codec": "H.264 High",
+  "audio_codec": "AAC 48 kHz stereo",
+  "audio": "Non-vocal industrial electronic score only. No narration or voiceover.",
+  "footage_policy": "Live application footage is the evidence layer. Motion graphics are limited to the opening, factual architecture explanation, and an explicitly labelled proposed scalability frame.",
+  "implemented_prototype_coverage": ["Three.js conveyor digital twin", "Live operating state and KPIs", "Joint J023 inspection", "Fault injection and alarm state", "Validated operator stop response", "Condition monitoring", "Analytics and 24-joint health matrix"],
+  "proposed_content": ["Multi-asset to plant-level deployment path, marked PROPOSED / NEXT PHASE"],
+  "excluded_claims": ["No fabricated throughput, accuracy, certification, deployment, sensor, FEA, protocol, or trained-ML claims"]
+}

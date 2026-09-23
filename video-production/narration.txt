@@ -1,0 +1,29 @@
+[00:00–00:08]
+Iron Ore Conveyor Digital Twin is a real-time operational view of conveyor C01.
+
+[00:08–00:22]
+The interface brings a live three-dimensional conveyor, operator controls, KPIs, and alarm status into one focused workspace.
+
+[00:22–00:42]
+Telemetry is streamed from the FastAPI twin engine to the browser, keeping speed, load, tension, vibration, temperature, power, and belt tracking current.
+
+[00:42–01:05]
+The built-in simulator lets an operator safely introduce conditions such as joint damage, overheat, high vibration, belt tear, or a conveyor jam—then observe how the model responds.
+
+[01:05–01:22]
+When a component needs attention, the asset inspector turns live signals into an individual health view with failure probability and contributing factors.
+
+[01:22–01:42]
+Analytics preserves the live signal history across the key operating metrics, alongside a visual health matrix for all twenty-four belt splices.
+
+[01:42–01:58]
+The alarm workflow makes event severity visible, filterable, and ready for acknowledgement.
+
+[01:58–02:12]
+Maintenance recommendations connect operational risk to prioritized work, including an estimated risk horizon where available.
+
+[02:12–02:25]
+Built with React, TypeScript, Three.js, FastAPI, WebSockets, Zustand, Recharts, and SQLite, the system connects simulation, visualization, and operations in one stack.
+
+[02:25–02:38]
+Iron Ore Conveyor Digital Twin: a practical HMI for observing, testing, and responding to conveyor health in real time.

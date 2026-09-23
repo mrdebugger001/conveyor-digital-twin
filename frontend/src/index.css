@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Light Theme Variables (Default) */
+:root {
+  --surface: 241 245 249;            /* #F1F5F9 - clean industrial light slate */
+  --surface-container: 255 255 255;  /* #FFFFFF - white cards & panels */
+  --surface-high: 226 232 240;       /* #E2E8F0 - raised elevated buttons & chips */
+  --outline-variant: 203 213 225;    /* #CBD5E1 - clean subtle borders */
+  --on-surface: 15 23 42;            /* #0F172A - high-contrast slate text */
+  --on-surface-variant: 100 116 139; /* #64748B - secondary label text */
+  --primary: 2 132 199;              /* #0284C7 - precision industrial cyan-blue */
+  --primary-container: 224 242 254;  /* #E0F2FE - active indicator container */
+  --status-green: 22 163 74;         /* #16A34A - normal / running */
+  --status-amber: 217 119 6;         /* #D97706 - warning */
+  --status-red: 220 38 38;           /* #DC2626 - critical / emergency */
+  --status-gray: 100 116 139;        /* #64748B - stopped */
+  --status-purple: 147 51 234;       /* #9333EA - maintenance */
+  color-scheme: light;
+}
+
+/* Dark Theme Variables */
+.dark {
+  --surface: 18 21 26;               /* #12151A - deep dark industrial background */
+  --surface-container: 27 31 36;     /* #1B1F24 - cards, nav rail, app bar */
+  --surface-high: 35 40 48;          /* #232830 - selected / elevated elements */
+  --outline-variant: 51 56 63;       /* #33383F - low-emphasis dividers */
+  --on-surface: 227 230 234;         /* #E3E6EA - primary text */
+  --on-surface-variant: 154 163 172; /* #9AA3AC - secondary labels */
+  --primary: 142 205 255;            /* #8ECDFF - active accent signal */
+  --primary-container: 22 69 105;    /* #164569 - primary container */
+  --status-green: 74 222 128;        /* #4ADE80 - normal / running */
+  --status-amber: 242 184 75;        /* #F2B84B - warning */
+  --status-red: 242 85 90;           /* #F2555A - critical / emergency */
+  --status-gray: 107 117 128;        /* #6B7580 - stopped */
+  --status-purple: 182 156 240;      /* #B69CF0 - maintenance */
+  color-scheme: dark;
+}
+
+body {
+  background-color: rgb(var(--surface));
+  color: rgb(var(--on-surface));
+  font-family: Inter, Roboto, system-ui, sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', 'Roboto Mono', monospace;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--surface));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--outline-variant));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--on-surface-variant));
+}
+
+/* Status pulse animation for CRITICAL */
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.pulse-critical {
+  animation: pulse-red 1.2s ease-in-out infinite;
+}
+
+/* Canvas container */
+.three-canvas canvas {
+  display: block;
+}
