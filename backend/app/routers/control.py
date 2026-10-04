@@ -1,8 +1,14 @@
 from fastapi import APIRouter, HTTPException
 from app.twin.state_store import twin_store
-from app.schemas.twin import SpeedCommand
+from app.schemas.twin import SpeedCommand, SmartThrottleToggleCommand
+from pydantic import BaseModel
 
 router = APIRouter(prefix="/api/control", tags=["control"])
+
+
+class CoalFeedCommand(BaseModel):
+    coal_tph: float
+    moisture_pct: float = 6.5
 
 
 @router.post("/{asset_id}/start")
@@ -41,3 +47,25 @@ async def set_speed(asset_id: str, cmd: SpeedCommand):
 async def estop_conveyor(asset_id: str):
     await twin_store.set_run_command("ESTOP")
     return {"status": "ESTOP_LATCHED"}
+
+
+@router.post("/{asset_id}/smart-throttle")
+async def toggle_smart_throttle(asset_id: str, cmd: SmartThrottleToggleCommand):
+    await twin_store.set_smart_throttle(cmd.enabled)
+    enabled, active, derate = await twin_store.get_smart_throttle_status()
+    return {
+        "status": "OK",
+        "smartThrottleEnabled": enabled,
+        "smartThrottleActive": active,
+        "deratePct": derate,
+    }
+
+
+@router.post("/{asset_id}/coal-feed")
+async def set_coal_feed(asset_id: str, cmd: CoalFeedCommand):
+    await twin_store.set_coal_feed(cmd.coal_tph, cmd.moisture_pct)
+    return {
+        "status": "OK",
+        "targetCoalTph": cmd.coal_tph,
+        "moisturePct": cmd.moisture_pct,
+    }

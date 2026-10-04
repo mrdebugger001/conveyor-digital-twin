@@ -20,6 +20,8 @@ async def get_prediction(asset_id: str):
             vibration=j.vibration,
             temperature=j.temperature,
             tracking_deviation=state.tracking,
+            stress_mpa=j.stress_mpa,
+            miner_damage=j.miner_damage,
         )
         risk, factors = joint_risk_score(reading)
         # Rough risk horizon: at 100 % risk → ~1 h; at 30 % risk → ~48 h
@@ -30,6 +32,8 @@ async def get_prediction(asset_id: str):
             "healthScore": round(j.health, 1),
             "contributingFactors": factors,
             "riskHorizonHours": round(horizon, 1) if horizon is not None else None,
+            "stressMpa": j.stress_mpa,
+            "minerDamage": j.miner_damage,
         }
 
     # --- Motor prediction ---
@@ -47,6 +51,8 @@ async def get_prediction(asset_id: str):
             "healthScore": round(max(0.0, 100.0 - temp_risk * 100.0), 1),
             "contributingFactors": factors,
             "riskHorizonHours": None,
+            "stressMpa": None,
+            "minerDamage": None,
         }
 
     raise HTTPException(404, f"No prediction available for {asset_id}")

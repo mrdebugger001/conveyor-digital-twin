@@ -1,0 +1,15 @@
+.git
+.github
+node_modules
+frontend/node_modules
+frontend/dist
+backend/.pytest_cache
+backend/__pycache__
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+backend/*.db
+.system_generated
+.vscode
+.idea
+*.log

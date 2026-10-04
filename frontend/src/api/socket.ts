@@ -8,7 +8,12 @@ let reconnectDelay = 1000
 export function connectSocket() {
   const { setConveyor, addAlarm, updateAlarm, setConnectionStatus } = useTwinStore.getState()
 
-  const url = `ws://${window.location.hostname}:8000/ws/realtime`
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
+  // In Vite dev mode (port 3000), connect directly to backend on 8000; otherwise use current origin host
+  const host = window.location.port === '3000'
+    ? `${window.location.hostname}:8000`
+    : (window.location.host || `${window.location.hostname}:8000`)
+  const url = `${protocol}//${host}/ws/realtime`
   ws = new WebSocket(url)
 
   ws.onopen = () => {

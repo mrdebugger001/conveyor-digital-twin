@@ -44,6 +44,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from app.routers import assets, alarms, control, simulator, predictions, maintenance, history, conveyor, analytics
+
 # --- REST Routers ---
 app.include_router(assets.router)
 app.include_router(alarms.router)
@@ -52,6 +54,8 @@ app.include_router(simulator.router)
 app.include_router(predictions.router)
 app.include_router(maintenance.router)
 app.include_router(history.router)
+app.include_router(conveyor.router)
+app.include_router(analytics.router)
 
 
 @app.get("/health", tags=["meta"])
@@ -77,3 +81,34 @@ async def websocket_endpoint(websocket: WebSocket):
         manager.disconnect(websocket)
     except Exception:
         manager.disconnect(websocket)
+
+
+# --- Static Files & SPA Fallback (Production / Docker) ---
+import os
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+STATIC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "static"))
+if not os.path.exists(STATIC_DIR):
+    repo_dist = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist"))
+    if os.path.exists(repo_dist):
+        STATIC_DIR = repo_dist
+
+if os.path.exists(STATIC_DIR):
+    assets_dir = os.path.join(STATIC_DIR, "assets")
+    if os.path.exists(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    @app.get("/", include_in_schema=False)
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_spa(full_path: str = ""):
+        if full_path.startswith("api") or full_path.startswith("ws"):
+            from fastapi import HTTPException
+            raise HTTPException(status_code=404, detail="Not found")
+        file_path = os.path.join(STATIC_DIR, full_path)
+        if full_path and os.path.isfile(file_path):
+            return FileResponse(file_path)
+        index_path = os.path.join(STATIC_DIR, "index.html")
+        if os.path.exists(index_path):
+            return FileResponse(index_path)
+        return {"status": "ok", "service": "conveyor-digital-twin"}

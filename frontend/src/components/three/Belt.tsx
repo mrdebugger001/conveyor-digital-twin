@@ -25,19 +25,19 @@ export function Belt({ viewMode = 'realistic' }: BeltProps) {
     canvas.height = 256
     const ctx = canvas.getContext('2d')!
 
-    ctx.fillStyle = '#181B20'
+    ctx.fillStyle = '#16191E'
     ctx.fillRect(0, 0, 1024, 256)
 
     const centerGrad = ctx.createLinearGradient(0, 0, 0, 256)
-    centerGrad.addColorStop(0, 'rgba(30, 34, 40, 0.9)')
-    centerGrad.addColorStop(0.3, 'rgba(42, 48, 56, 0.95)')
-    centerGrad.addColorStop(0.5, 'rgba(48, 54, 64, 1.0)')
-    centerGrad.addColorStop(0.7, 'rgba(42, 48, 56, 0.95)')
-    centerGrad.addColorStop(1, 'rgba(30, 34, 40, 0.9)')
+    centerGrad.addColorStop(0, 'rgba(26, 30, 36, 0.9)')
+    centerGrad.addColorStop(0.3, 'rgba(36, 42, 50, 0.95)')
+    centerGrad.addColorStop(0.5, 'rgba(44, 50, 60, 1.0)')
+    centerGrad.addColorStop(0.7, 'rgba(36, 42, 50, 0.95)')
+    centerGrad.addColorStop(1, 'rgba(26, 30, 36, 0.9)')
     ctx.fillStyle = centerGrad
     ctx.fillRect(0, 30, 1024, 196)
 
-    ctx.strokeStyle = 'rgba(60, 68, 80, 0.4)'
+    ctx.strokeStyle = 'rgba(55, 62, 74, 0.4)'
     ctx.lineWidth = 4
     for (let x = 0; x < 1024; x += 32) {
       ctx.beginPath()
@@ -47,10 +47,12 @@ export function Belt({ viewMode = 'realistic' }: BeltProps) {
       ctx.stroke()
     }
 
+    // High-visibility yellow safety edge stripes
     ctx.fillStyle = '#E5A93C'
     ctx.fillRect(0, 16, 1024, 5)
     ctx.fillRect(0, 235, 1024, 5)
 
+    // Steel cord indicator edge bead
     ctx.fillStyle = '#8B949E'
     ctx.fillRect(0, 0, 1024, 4)
     ctx.fillRect(0, 252, 1024, 4)
@@ -60,18 +62,29 @@ export function Belt({ viewMode = 'realistic' }: BeltProps) {
     rTex.wrapT = THREE.ClampToEdgeWrapping
     rTex.repeat.set(4, 1)
 
-    // 2. Stress / Thermal Heatmap Texture
+    // 2. CEMA DIN 22101 Multi-Spectral FEA Stress Heatmap Texture
     const hCanvas = document.createElement('canvas')
     hCanvas.width = 1024
     hCanvas.height = 256
     const hCtx = hCanvas.getContext('2d')!
     const hGrad = hCtx.createLinearGradient(0, 0, 1024, 0)
-    hGrad.addColorStop(0, '#3B82F6')
-    hGrad.addColorStop(0.3, '#10B981')
-    hGrad.addColorStop(0.65, '#F59E0B')
-    hGrad.addColorStop(0.9, '#EF4444')
+    hGrad.addColorStop(0.0, '#1E88E5')  // Deep Blue (Low stress <8.5 MPa)
+    hGrad.addColorStop(0.25, '#00E5FF') // Electric Cyan (Nominal 10.5 MPa)
+    hGrad.addColorStop(0.55, '#00E676') // Operational Green (12.5 MPa)
+    hGrad.addColorStop(0.80, '#FFD600') // Warning Amber (13.8 - 14.5 MPa)
+    hGrad.addColorStop(1.0, '#FF1744')  // Critical Crimson (>15.0 MPa Peeling)
     hCtx.fillStyle = hGrad
     hCtx.fillRect(0, 0, 1024, 256)
+
+    // Add isobar FEA stress contour lines
+    hCtx.strokeStyle = 'rgba(255, 255, 255, 0.25)'
+    hCtx.lineWidth = 2
+    for (let c = 100; c < 1024; c += 120) {
+      hCtx.beginPath()
+      hCtx.moveTo(c, 0)
+      hCtx.lineTo(c, 256)
+      hCtx.stroke()
+    }
 
     const hTex = new THREE.CanvasTexture(hCanvas)
     hTex.wrapS = THREE.RepeatWrapping
@@ -102,7 +115,7 @@ export function Belt({ viewMode = 'realistic' }: BeltProps) {
     shape.closePath()
 
     const extrudeSettings = {
-      steps: 32,
+      steps: 48,
       depth: BELT_LENGTH,
       bevelEnabled: false,
     }
@@ -115,6 +128,10 @@ export function Belt({ viewMode = 'realistic' }: BeltProps) {
   const returnBeltGeometry = useMemo(() => {
     return new THREE.BoxGeometry(BELT_LENGTH, 0.02, BELT_WIDTH * 0.95)
   }, [])
+
+  // Dynamic catenary sag calculation (mm converted to Three.js world Y offset)
+  const dynamicSagMm = conveyor?.beltSagMm ?? 14.0
+  const sagYOffset = -(dynamicSagMm / 1000.0) * 0.8 // subtle visible droop under heavy tonnage
 
   // Live texture scrolling
   useFrame((state, delta) => {
@@ -136,7 +153,7 @@ export function Belt({ viewMode = 'realistic' }: BeltProps) {
     }
   })
 
-  // Dynamic tracking lateral offset (clearly visible when misaligned)
+  // Dynamic tracking lateral offset
   const tracking = conveyor?.tracking ?? 0
   const lateralZ = tracking * 0.065
   const isMisaligned = Math.abs(tracking) >= 2.5
@@ -148,8 +165,8 @@ export function Belt({ viewMode = 'realistic' }: BeltProps) {
   const currentTexture = viewMode === 'heatmap' ? heatmapTexture : rubberTexture
 
   return (
-    <group position={[0, 0, lateralZ]}>
-      {/* Upper Carry Belt (Troughed) */}
+    <group position={[0, sagYOffset, lateralZ]}>
+      {/* Upper Carry Belt (Troughed with Catenary Sag) */}
       <mesh
         ref={meshRef}
         geometry={troughedGeometry}
@@ -162,8 +179,8 @@ export function Belt({ viewMode = 'realistic' }: BeltProps) {
           ref={matRef}
           map={currentTexture}
           color={viewMode === 'wireframe' ? '#8ECDFF' : '#FFFFFF'}
-          roughness={0.7}
-          metalness={0.15}
+          roughness={viewMode === 'heatmap' ? 0.35 : 0.7}
+          metalness={viewMode === 'heatmap' ? 0.4 : 0.15}
           wireframe={viewMode === 'wireframe'}
         />
       </mesh>
@@ -191,7 +208,7 @@ export function Belt({ viewMode = 'realistic' }: BeltProps) {
               roughness={0.9}
             />
           </mesh>
-          {/* Exposed frayed cord fibers */}
+          {/* Exposed frayed steel cord wires */}
           <mesh position={[0, 0.02, 0]} rotation={[0, -0.2, 0]}>
             <boxGeometry args={[1.2, 0.02, 0.06]} />
             <meshBasicMaterial color="#FEF08A" />
@@ -209,7 +226,7 @@ export function Belt({ viewMode = 'realistic' }: BeltProps) {
       >
         <meshStandardMaterial
           map={rubberTexture}
-          color="#22272E"
+          color="#1C2128"
           roughness={0.8}
           metalness={0.1}
           wireframe={viewMode === 'wireframe'}

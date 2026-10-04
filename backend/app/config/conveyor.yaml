@@ -1,0 +1,86 @@
+conveyor:
+  id: "C01"
+  name: "Iron Ore Main Decline Transfer Conveyor C01"
+  material: "iron_ore"
+
+geometry:
+  conveyor_horizontal_length_m: 349.7
+  conveyor_length_m: 350.0
+  lift_height_m: 14.0
+  inclination_deg: 2.29
+  carrying_angle_deg: 35.0
+  belt_width_m: 1.4
+  belt_thickness_m: 0.018
+  idler_spacing_m: 1.2
+  return_idler_spacing_m: 3.0
+  troughing_angle_deg: 35.0
+  total_loop_length_m: 720.0
+
+belt:
+  type: "ST2500"
+  mass_kg_per_m: 24.5
+  thickness_m: 0.018
+  top_cover_thickness_m: 0.008
+  bottom_cover_thickness_m: 0.006
+  core_thickness_m: 0.004
+  elastic_modulus_pa: 450000000.0
+  tensile_strength_pa: 25000000.0
+  splice_efficiency: 0.88
+  damping_coefficient: 12000.0
+  max_allowable_sag_pct: 2.0
+
+material:
+  material_type: "iron_ore"
+  density_kg_per_m3: 2400.0
+  throughput_tph: 1200.0
+  max_throughput_tph: 2400.0
+  surcharge_angle_deg: 20.0
+  friction_coefficient: 0.35
+  moisture_pct_nominal: 4.5
+  lump_size_max_m: 0.15
+
+drive:
+  pulley_diameter_m: 1.0
+  pulley_wrap_deg: 210.0
+  pulley_friction_coefficient: 0.38
+  tail_pulley_diameter_m: 0.8
+  motor_power_kw: 450.0
+  motor_rated_rpm: 1485.0
+  motor_efficiency: 0.955
+  gearbox_ratio: 24.2
+  gearbox_efficiency: 0.96
+  drive_mechanical_efficiency: 0.97
+  rated_voltage_v: 415.0
+  rated_power_factor: 0.87
+  thermal_resistance_k_per_w: 0.00018
+  thermal_capacitance_j_per_k: 450000.0
+  ambient_temperature_c: 32.0
+
+tension:
+  tail_tension_n: 36000.0
+  takeup_type: "gravity_counterweight"
+  takeup_stiffness: 850000.0
+  takeup_mass_kg: 7340.0
+  minimum_allowable_tension_n: 25000.0
+  warning_tension_n: 165000.0
+  critical_tension_n: 195000.0
+
+idlers:
+  carrying_mass_kg_per_idler: 18.0
+  return_mass_kg_per_idler: 8.5
+  roller_diameter_m: 0.152
+  rolling_resistance_f: 0.020
+  secondary_resistance_c: 1.08
+
+joints:
+  number_of_joints: 24
+  spacing_m: 30.0
+  nominal_splice_factor: 0.88
+  stress_concentration_factor_kt: 1.25
+  fatigue_exponent_m: 5.5
+  fatigue_endurance_limit_pa: 8500000.0
+  ultimate_splice_strength_pa: 22000000.0
+  fatigue_critical_damage: 0.85
+  fatigue_warning_damage: 0.65
+  stress_warning_pa: 13800000.0
+  stress_critical_pa: 15500000.0

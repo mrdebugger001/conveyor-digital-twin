@@ -368,13 +368,13 @@ function ChutesAndHoppers() {
   )
 }
 
-// Belt Joints / Splices with realistic crack/shear defect, vibration jitter, and glowing callout beacon
+// Belt Joints / Splices with FEA stress heatmap shader colors, stress wave propagation, and diagnostics
 function BeltSplices() {
   const conveyor = useTwinStore((s) => s.conveyor)
   const setSelected = useTwinStore((s) => s.setSelectedAsset)
   if (!conveyor) return null
 
-  // 8 monitored mechanical splices
+  // Monitored mechanical splices along the 16m visible section
   const VISIBLE_JOINTS = ['J003', 'J006', 'J009', 'J012', 'J015', 'J018', 'J021', 'J023']
 
   return (
@@ -382,10 +382,12 @@ function BeltSplices() {
       {VISIBLE_JOINTS.map((jid, i) => {
         const x = -CONVEYOR_LENGTH / 2 + 1.8 + i * (CONVEYOR_LENGTH - 3.6) / (VISIBLE_JOINTS.length - 1)
         const jState = conveyor.jointHealth[jid]
-        const isDegraded = jState?.status === 'WARNING' || jState?.status === 'CRITICAL' || (jState?.health ?? 100) < 75
-        const isCritical = jState?.status === 'CRITICAL' || (jState?.health ?? 100) < 55
+        const stressMpa = jState?.stressMpa ?? 11.0
+        const isDegraded = jState?.status === 'WARNING' || jState?.status === 'CRITICAL' || (jState?.health ?? 100) < 75 || stressMpa >= 13.8
+        const isCritical = jState?.status === 'CRITICAL' || (jState?.health ?? 100) < 55 || stressMpa >= 15.0
 
-        const color = isCritical ? '#EF4444' : isDegraded ? '#F59E0B' : '#3A4454'
+        // Use FEA multi-spectral color or fallback based on stress severity
+        const feaColor = jState?.feaColor || (isCritical ? '#FF1744' : isDegraded ? '#FFD600' : '#1E88E5')
 
         return (
           <JointItem
@@ -395,7 +397,7 @@ function BeltSplices() {
             jState={jState}
             isDegraded={isDegraded}
             isCritical={isCritical}
-            color={color}
+            feaColor={feaColor}
             onSelect={() => setSelected(`joint-${jid}`)}
           />
         )
@@ -410,7 +412,7 @@ function JointItem({
   jState,
   isDegraded,
   isCritical,
-  color,
+  feaColor,
   onSelect,
 }: {
   jid: string
@@ -418,23 +420,33 @@ function JointItem({
   jState: any
   isDegraded: boolean
   isCritical: boolean
-  color: string
+  feaColor: string
   onSelect: () => void
 }) {
   const groupRef = useRef<THREE.Group>(null)
   const beaconRef = useRef<THREE.Mesh>(null)
+  const stressWaveRef = useRef<THREE.Mesh>(null)
 
   useFrame((state) => {
     const clock = state.clock.elapsedTime
 
-    // When joint is defective, apply mechanical vibration jitter to the splice
+    // When joint is under severe stress/degradation, apply mechanical vibration jitter
     if (groupRef.current && isDegraded) {
-      const shake = Math.sin(clock * 45) * 0.015
+      const vib = jState?.vibration ?? 2.0
+      const shake = Math.sin(clock * 50) * Math.min(0.02, (vib / 10) * 0.02)
       groupRef.current.position.y = 0.06 + shake
-      groupRef.current.position.x = x + Math.cos(clock * 30) * 0.01
+      groupRef.current.position.x = x + Math.cos(clock * 35) * 0.008
     } else if (groupRef.current) {
       groupRef.current.position.y = 0.06
       groupRef.current.position.x = x
+    }
+
+    // Dynamic FEA stress wave propagation on splice (sweeps across joint)
+    if (stressWaveRef.current) {
+      const wavePos = (Math.sin(clock * 6 + (jid === 'J023' ? 0 : 2)) * 0.5 + 0.5) * 1.2 - 0.6
+      stressWaveRef.current.position.z = wavePos
+      const waveMat = stressWaveRef.current.material as THREE.MeshBasicMaterial
+      waveMat.opacity = isCritical ? 0.8 : isDegraded ? 0.5 : 0.25
     }
 
     // Pulsing beacon ring animation
@@ -446,18 +458,20 @@ function JointItem({
     }
   })
 
+  const stressVal = jState?.stressMpa ?? 11.2
+
   return (
     <group ref={groupRef} position={[x, 0.06, 0]}>
-      {/* If degraded, render a REALISTIC CRACKED / SHEARED JOINT with gap and exposed steel cords */}
+      {/* If degraded or critical, render cracked/fatigued splice with FEA stress concentration */}
       {isDegraded ? (
         <group onClick={(e) => { e.stopPropagation(); onSelect() }}>
           {/* Left cracked half */}
           <mesh position={[-0.04, 0, 0.35]} rotation={[0, 0.08, 0]} castShadow>
             <boxGeometry args={[0.16, 0.045, 0.65]} />
             <meshStandardMaterial
-              color={color}
-              emissive={color}
-              emissiveIntensity={isCritical ? 0.85 : 0.45}
+              color={feaColor}
+              emissive={feaColor}
+              emissiveIntensity={isCritical ? 0.85 : 0.4}
               metalness={0.7}
               roughness={0.3}
             />
@@ -467,15 +481,21 @@ function JointItem({
           <mesh position={[0.04, 0, -0.35]} rotation={[0, -0.08, 0]} castShadow>
             <boxGeometry args={[0.16, 0.045, 0.65]} />
             <meshStandardMaterial
-              color={color}
-              emissive={color}
-              emissiveIntensity={isCritical ? 0.85 : 0.45}
+              color={feaColor}
+              emissive={feaColor}
+              emissiveIntensity={isCritical ? 0.85 : 0.4}
               metalness={0.7}
               roughness={0.3}
             />
           </mesh>
 
-          {/* Ruptured Fissure Gap with Glowing Heat/Spark Emissive Line */}
+          {/* Dynamic Traveling Stress Wave Line */}
+          <mesh ref={stressWaveRef} position={[0, 0.03, 0]}>
+            <boxGeometry args={[0.14, 0.015, 0.2]} />
+            <meshBasicMaterial color="#FFFFFF" transparent opacity={0.6} />
+          </mesh>
+
+          {/* Ruptured Fissure Gap with Glowing Core Cord Emissive Line */}
           <mesh position={[0, 0.02, 0]}>
             <boxGeometry args={[0.08, 0.02, 1.3]} />
             <meshBasicMaterial color={isCritical ? '#FF0000' : '#FFB300'} />
@@ -484,29 +504,37 @@ function JointItem({
           {/* Pulsing Warning Ground Ring Indicator */}
           <mesh ref={beaconRef} position={[0, -0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
             <ringGeometry args={[0.5, 0.75, 24]} />
-            <meshBasicMaterial color={color} transparent opacity={0.5} side={THREE.DoubleSide} />
+            <meshBasicMaterial color={feaColor} transparent opacity={0.5} side={THREE.DoubleSide} />
           </mesh>
 
           {/* Vertical Guide Line to the Status Chip */}
           <mesh position={[0, 0.5, 0]}>
             <cylinderGeometry args={[0.006, 0.006, 0.9, 8]} />
-            <meshBasicMaterial color={color} transparent opacity={0.8} />
+            <meshBasicMaterial color={feaColor} transparent opacity={0.8} />
           </mesh>
         </group>
       ) : (
-        /* Normal Nominal Splice Plate */
-        <mesh
-          userData={{ assetId: `joint-${jid}` }}
-          onClick={(e) => { e.stopPropagation(); onSelect() }}
-          castShadow
-        >
-          <boxGeometry args={[0.18, 0.04, 1.35]} />
-          <meshStandardMaterial
-            color="#3A4454"
-            metalness={0.7}
-            roughness={0.3}
-          />
-        </mesh>
+        /* Normal Nominal Splice Plate with FEA shader tint */
+        <group onClick={(e) => { e.stopPropagation(); onSelect() }}>
+          <mesh
+            userData={{ assetId: `joint-${jid}` }}
+            castShadow
+          >
+            <boxGeometry args={[0.18, 0.04, 1.35]} />
+            <meshStandardMaterial
+              color={feaColor}
+              metalness={0.6}
+              roughness={0.4}
+              emissive={feaColor}
+              emissiveIntensity={0.15}
+            />
+          </mesh>
+          {/* Subtle stress wave on nominal joints */}
+          <mesh ref={stressWaveRef} position={[0, 0.025, 0]}>
+            <boxGeometry args={[0.12, 0.008, 0.15]} />
+            <meshBasicMaterial color="#00E5FF" transparent opacity={0.25} />
+          </mesh>
+        </group>
       )}
 
       {/* Rivet row */}
@@ -517,7 +545,7 @@ function JointItem({
         </mesh>
       ))}
 
-      {/* Floating Status Badge above Joint (Prominent when degraded) */}
+      {/* Floating Status Badge above Joint with FEA MPa Stress & Miner damage */}
       {isDegraded && (
         <Html position={[0, 1.05, 0]} center distanceFactor={14}>
           <button
@@ -530,8 +558,8 @@ function JointItem({
           >
             <span className={`w-2.5 h-2.5 rounded-full ${isCritical ? 'bg-status-red animate-ping' : 'bg-status-amber'}`} />
             <span>
-              {jid} · {isCritical ? 'CRITICAL DEFECT' : 'WARNING'}
-              {jState ? ` (${jState.vibration.toFixed(1)} mm/s)` : ''}
+              {jid} · {stressVal.toFixed(1)} MPa · {isCritical ? 'CRITICAL PEEL' : 'HIGH STRESS'}
+              {jState?.minerDamage ? ` (D=${jState.minerDamage.toFixed(2)})` : ''}
             </span>
           </button>
         </Html>

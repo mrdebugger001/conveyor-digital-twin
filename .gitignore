@@ -1,24 +1,94 @@
-# Node.js dependencies and build output
-node_modules/
-dist/
-build/
-.vite/
+# ==============================================================================
+# Conveyor C01 Digital Twin - Git Ignore Configuration
+# Optimized for GitHub Single-Repository Distribution
+# ==============================================================================
 
-# Python environments, caches, and generated package metadata
+# Node.js dependencies, caches, and build artifacts
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+build/
+**/build/
+.vite/
+**/.vite/
+package-lock.json.bak
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.remotion/
+
+# Python environments, virtualenvs, and byte-compiled files
 .venv/
 venv/
-__pycache__/
+ENV/
+env/
+**/__pycache__/
 *.py[cod]
+*$py.class
 *.egg-info/
+*.egg
 .pytest_cache/
 .mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
 
-# Environment and local tooling files
+# Local runtime databases (auto-created and seeded on first run)
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+backend/conveyor_twin.db
+
+# Docker exported images & tarballs
+*.tar
+*.tar.gz
+conveyor-digital-twin.tar
+
+# Video recordings, raw screen captures, and master renders (> 25MB - exceeds GitHub limits)
+demo-video/
+video-production/renders/*.mp4
+video-production/renders/*.wav
+video-production/raw/
+video-production/recordings/
+video-production/edited/
+video-production/scenes/*.mp4
+*.webm
+test-*.png
+qc-*.png
+
+# Raw downloaded dataset files (directories tracked via .gitkeep)
+backend/app/data/raw/*/*
+!backend/app/data/raw/*/.gitkeep
+backend/app/data/cache/*
+!backend/app/data/cache/.gitkeep
+backend/app/data/processed/*
+!backend/app/data/processed/.gitkeep
+
+# Environment files and secrets
 .env
 .env.*
 !.env.example
-.vscode/
 
-# OS files
+# IDE and Editor configuration
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Operating System files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+desktop.ini

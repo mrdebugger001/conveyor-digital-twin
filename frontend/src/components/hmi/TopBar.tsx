@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { User, Volume2, VolumeX, Sun, Moon } from 'lucide-react'
+import { User, Volume2, VolumeX, Sun, Moon, Zap } from 'lucide-react'
 import { useTwinStore } from '../../store/twinStore'
 import { useControlStore } from '../../store/controlStore'
 
 const MODES = ['Live', 'Simulation', 'Playback'] as const
 
 export function TopBar() {
-  const { connectionStatus, theme, toggleTheme } = useTwinStore()
+  const { connectionStatus, theme, toggleTheme, conveyor } = useTwinStore()
   const { mode, setMode } = useControlStore()
   const [currentTime, setCurrentTime] = useState('')
   const [soundEnabled, setSoundEnabled] = useState(false)
@@ -25,17 +25,29 @@ export function TopBar() {
 
   const isOnline = connectionStatus === 'ONLINE'
   const isDark = theme === 'dark'
+  const throttleActive = conveyor?.smartThrottleActive ?? false
+  const deratePct = conveyor?.smartThrottleDeratePct ?? 0
 
   return (
     <header className="flex items-center justify-between px-5 h-14 bg-surface-container border-b border-outline-variant flex-shrink-0 z-30 transition-colors">
-      {/* Left side: title + subtitle */}
-      <div className="flex flex-col justify-center">
-        <h1 className="text-sm font-semibold text-on-surface tracking-tight leading-none">
-          Iron Ore Conveyor — Digital Twin
-        </h1>
-        <span className="text-[11px] text-on-surface-variant font-mono mt-1">
-          CV-01 · Live telemetry
-        </span>
+      {/* Left side: title + subtitle + AI throttle alert pill */}
+      <div className="flex items-center gap-4">
+        <div className="flex flex-col justify-center">
+          <h1 className="text-sm font-semibold text-on-surface tracking-tight leading-none">
+            Coal Conveyor C01 — Digital Twin
+          </h1>
+          <span className="text-[11px] text-on-surface-variant font-mono mt-1">
+            CEMA / DIN 22101 · ST2500 Steel-Cord Splice Physics
+          </span>
+        </div>
+
+        {/* AI Smart Throttle Active Badge */}
+        {throttleActive && (
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-status-amber/20 border border-status-amber text-status-amber text-[11px] font-bold animate-pulse shadow-lg">
+            <Zap size={13} className="text-status-amber animate-bounce" />
+            <span>AI THROTTLE ACTIVE (-{deratePct.toFixed(0)}% LOAD)</span>
+          </div>
+        )}
       </div>
 
       {/* Right side: segmented button + theme toggle + sound + status chip + clock + user */}

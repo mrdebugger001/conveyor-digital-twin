@@ -1,25 +1,21 @@
-version: "3.9"
+version: '3.8'
 
 services:
-  backend:
-    build: ./backend
+  conveyor-twin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: conveyor-digital-twin:latest
+    container_name: conveyor-digital-twin
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=sqlite+aiosqlite:///./conveyor_twin.db
-    volumes:
-      - ./backend:/app
+      - PORT=8000
+      - PYTHONUNBUFFERED=1
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 10s
+      interval: 15s
       timeout: 5s
-      retries: 5
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:80"
-    depends_on:
-      - backend
-    restart: unless-stopped
+      retries: 3
+      start_period: 10s
